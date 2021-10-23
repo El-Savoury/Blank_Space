@@ -259,7 +259,6 @@ namespace text_adventure
                         {
                             string i = Prompt("    > Type start to begin: ");
                             if (i.ContainsAny("start", "Start", "START")) { break; }
-                            //else { goto case "win"; } //skip to end
                         }
 
                         //intro
