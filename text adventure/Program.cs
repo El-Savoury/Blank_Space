@@ -111,7 +111,7 @@ namespace text_adventure
             Centered("[+]Shields...........Online.....[+]");
             Centered("[+]Damage Status.....No Damage..[+]");
             Centered("[+]Current Heading...No Heading.[+]");
-            Centered("[+]Crew Count:.......21/22......[+]");
+            Centered("[+]Crew Count:.......23/24......[+]");
             Centered("-----------------------------------", "\n");
             Centered("-----------------------------------");
             Centered("[1]Ship Specifications..........[+]");
@@ -204,7 +204,7 @@ namespace text_adventure
             bool bandGet = false;
 
             //cargo vars
-            bool cargoLift = false;
+            int cargoVisits = 0;
             bool catSeen = false;
             bool kovaDefeated = false;
 
@@ -307,7 +307,7 @@ namespace text_adventure
                             }
                             //misc inputs
                             else if (i.ContainsAny("nothing", "wait")) { Print("You take a moment to try and collect your thoughts."); }
-                            else if (i.ContainsAny("walk", "run", "move", "go", "shout", "speak", "say")) { Print("You are currently too disorientated to do that."); }
+                            else if (i.ContainsAny("walk", "run", "go", "shout", "speak", "say")) { Print("You are currently too disorientated to do that."); }
                         }
                         location = "bridge";
                         break;
@@ -362,7 +362,7 @@ namespace text_adventure
                                 MessageHeard(newSoundHeard);
                             }
                             //look at people
-                            else if (i.ContainsAny("look at people", "view", "approach", "inspect", "look at crew"))
+                            else if (i.ContainsAny("look", "view", "approach", "inspect", "examine") && i.ContainsAny("people", "blue suits", "crew"))
                             {
                                 Console.ForegroundColor = ConsoleColor.DarkGray;
                                 Console.Write("    > Which person do you look at? 1 - 5\n\n");
@@ -387,7 +387,7 @@ namespace text_adventure
                                 Print("He is very tall and slender. His hair is dark. The front and back is cut short but the sides drop down almost to his ankles. The sides seem not to move at all. His hair appears to pass directly through his shoulders, as if he were reaching his arms through an energy field. His features are fine, with high cheekbones. He carries the look of one descended from the original Chinese settlers of Mars.");
                                 MessageHeard(newSoundHeard);
                             }
-                            else if ((i.Contains("look") && i.Contains("4")) || (action == "look" && !i.ContainsAny("talk", "speak") && i.Contains("4"))) //look at merceau
+                            else if ((i.Contains("look") && i.Contains("4")) || (action == "look" && !i.ContainsAny("talk", "speak") && i.Contains("4"))) //look at marceau
                             {
                                 person = 4;
                                 Print("She is a very old lady, still slowly getting to her feet. She is bent double and incredibly short. The skin of her hands and face is dark grey and folded with wrinkles. Her hair is perfect white.");
@@ -400,14 +400,14 @@ namespace text_adventure
                                 MessageHeard(newSoundHeard);
                             }
                             //talk to people
-                            else if (i == "talk" || i.ContainsAny("talk to people", "question people", "ask people", "speak to people"))
+                            else if ((i.Contains("talk") && i.ContainsAny("people", "blue suits")) || i.ContainsAny("talk to people", "question people", "ask people", "speak to people"))
                             {
                                 Console.ForegroundColor = ConsoleColor.DarkGray;
                                 Console.Write("    > Which person do you talk to? 1 - 5\n\n");
                                 Console.ResetColor();
                                 action = "talk";
                             }
-                            else if ((i.ContainsAny("talk", "speak") && i.ContainsAny("1", "red")) || (action == "talk" && i.Contains("1")) || (i == "talk to them, person" && person == 1)) //talk to quandro
+                            else if ((i.ContainsAny("talk", "speak") && i.ContainsAny("1", "red")) || (action == "talk" && i.Contains("1")) || (i.ContainsAny("talk to them", "person") && person == 1)) //talk to quandro
                             {
                                 Print("They produce a clicking sound as they talk but form words in a deep voice. They speak with stern authority.");
                                 Print("\"I am the only one in decorated uniform. I assume commmand of this vessel until the situation is understood.\"");
@@ -420,7 +420,7 @@ namespace text_adventure
                                     missionAccepted = true;
                                 }
                             }
-                            else if ((i.ContainsAny("talk", "speak") && i.Contains("2")) || (action == "talk" && !i.Contains("look") && i.Contains("2")) || (i.ContainsAny("them", "her, person") && person == 2)) //talk to crest
+                            else if ((i.ContainsAny("talk", "speak") && i.Contains("2")) || (action == "talk" && !i.Contains("look") && i.Contains("2")) || (i.ContainsAny("them", "her", "person") && person == 2)) //talk to crest
                             {
                                 Print("She is softly spoken.");
                                 Print("\"For a moment I thought you looked familiar.\"");
@@ -433,12 +433,12 @@ namespace text_adventure
                                 Print(" he says slowly.");
                                 MessageHeard(newSoundHeard);
                             }
-                            else if ((i.ContainsAny("talk", "speak") && i.Contains("4")) || (action == "talk" && !i.Contains("look") && i.Contains("4")) || (i.ContainsAny("them", "her, person") && person == 4)) //talk to marceau
+                            else if ((i.ContainsAny("talk", "speak") && i.Contains("4")) || (action == "talk" && !i.Contains("look") && i.Contains("4")) || (i.ContainsAny("them", "her", "person") && person == 4)) //talk to marceau
                             {
                                 Print("It takes a momement for the old woman to register you are speaking. She seems too confused to respond.");
                                 MessageHeard(newSoundHeard);
                             }
-                            else if ((i.ContainsAny("talk", "speak") && i.Contains("5")) || (action == "talk" && !i.Contains("look") && i.Contains("5")) || (i.ContainsAny("them", "her, person") && person == 5)) //talk to zathre
+                            else if ((i.ContainsAny("talk", "speak") && i.Contains("5")) || (action == "talk" && !i.Contains("look") && i.Contains("5")) || (i.ContainsAny("them", "her", "person") && person == 5)) //talk to zathre
                             {
                                 Print("\"Don't stare at me like that. I don't know what's going on here either.\"");
                                 MessageHeard(newSoundHeard);
@@ -467,7 +467,7 @@ namespace text_adventure
                                 else { Print("You can think of no valid reason to argue."); }
                             }
                             //get in lift
-                            else if (i.Contains("lift"))
+                            else if (i.ContainsAny("lift", "door"))
                             {
                                 if (getRelay == true && missionAccepted == true)
                                 {
@@ -532,6 +532,7 @@ namespace text_adventure
 
                     /*lift*/
                     case "lift":
+
                         if (liftEntered == false) //enter lift for first time
                         {
                             Print("You step into the lift. The interior consists of reflective metal panels. You are able to see yourself for the first time. To your left is a console of buttons.\n");
@@ -575,28 +576,28 @@ namespace text_adventure
                                 location = "engineering";
                                 //if (location == previousLocation) { AtLocation(); }
                                 //else
-                                { break; }
+                                break;
                             }
                             else if (i.ContainsAny("3", "medical"))
                             {
                                 location = "medical";
                                 //if (location == previousLocation) { AtLocation(); }
                                 //else
-                                { break; }
+                                break;
                             }
                             else if (i.ContainsAny("4", "cargo bay"))
                             {
                                 location = "cargo";
                                 //if (location == previousLocation) { AtLocation(); }
                                 //else
-                                { break; }
+                                break;
                             }
                             else if (i.ContainsAny("5", "quarters"))
                             {
                                 location = "quarters";
                                 //if (location == previousLocation) { AtLocation(); }
                                 //else
-                                { break; }
+                                break;
                             }
                         }
                         //use lift for first time
@@ -605,6 +606,7 @@ namespace text_adventure
                             Print("The lift creaks and moves downwards. Then it jolts to the side. Then goes down again.");
                             liftUsed = true;
                         }
+                        previousLocation = location;
                         break;
 
                     /*engineering*/
@@ -751,126 +753,153 @@ namespace text_adventure
                     /*cargo*/
                     case "cargo":
 
+                        cargoVisits++;
+
                         if (cargoVisited == false)
                         {
                             Print("You enter the cargo bay. The room is vast with a high ceiling. A gentle humming sound can be heard.");
                             cargoVisited = true;
                         }
-                        else { Print("You return to the cargo bay."); }
+                        else if (previousLocation != "encounter") { Print("You return to the cargo bay."); }
 
                         while (true)
                         {
                             string i = Prompt();
                             //listen hum
                             if (i.ContainsAny("listen", "hum")) { Print("The sound comes from an enormous field of energy which makes up the far wall of the cargo bay. Through it you can see thousands of stars out in the darkness."); }
-                            //look for cat
-                            else if (i.Contains("cat")) { Print("The cat is long gone."); }
+                            //go to cat
+                            else if (catSeen == true && i.Contains("cat") && i.ContainsAny("go", "approach", "talk", "look", "call", "walk"))
+                            {
+                                Print("The cat climbs unsteadily down from the shelf.");
+                                location = "encounter";
+                                break;
+                            }
                             //look tube
                             else if (i.Contains("look") && i.ContainsAny("tube", "object")) { Print("The object seems to be in a state of partial assembly or dissasembly. The nearest half of the tube is double the width of the back. It has a rounded end, where a panel is hanging open. The narrow part of the tube ends in three triangular fins."); }
                             //look panel
-                            else if (i.Contains("panel")) { Print("The panel opens onto a mess of circuitry. There is an Allen key tangled amongst the wires."); }
-                            //allen key
+                            else if (i.Contains("panel")) { Print("The panel opens onto a mess of circuitry. There is an hex key tangled amongst the wires."); }
+                            //hex key
                             else if (i.Contains("key")) { Print("You see no reason to do that."); }
                             //look boxes
                             else if (i.Contains("look") && i.ContainsAny("shelves", "boxes", "box")) { Print("The boxes are mostly flat and rectangular in shape. They are each stamped with the logo SKYKEA CORP."); }
                             //look around
-                            else if (i.Contains("look")) { Print("The room is lined by huge shelves. They are strapped with hundreds of boxes. Beyond the corridor of shelves an energy barrier separates you from the void of space. Laying horizontally in the centre of the room is a metal tube about the size of a standard shuttle craft."); }
+                            else if (i.Contains("look"))
+                            {
+                                Print("The room is lined by huge shelves. They are strapped with hundreds of boxes. Beyond the corridor of shelves an energy barrier separates you from the void of space. Laying horizontally in the centre of the room is a metal tube about the size of a standard shuttle craft.");
+                                if (catSeen == true && kovaDefeated == false) { Print("The cat is looking at you from atop one of the shelves. It seems to be having a hard time maintaining its balance."); }
+                            }
                             //lift
                             else if (i.ContainsAny("leave", "exit", "lift"))
                             {
-                                if (cargoLift == true)
+                                if (cargoVisits == 1)
+                                {
+                                    Print("As you are about to re-enter the lift you hear movement behind you. Then a sharp hiss.");
+                                    location = "encounter";
+                                    break;
+                                }
+                                else if (cargoVisits > 1 && catSeen == false)
+                                {
+                                    Print("You start toward the lift. You hear the hissing sound again coming from behind some boxes.");
+                                    location = "encounter";
+                                    break;
+                                }
+                                else
                                 {
                                     previousLocation = location;
                                     location = "lift";
                                     break;
                                 }
-                                else
-                                {
-                                    cargoLift = true;
-                                    Print("As you are about to re-enter the lift you hear movement behind you. Then a sharp hiss.");
+                            }
+                        }
+                        break;
+
+
+                    /*encounter*/
+                    case "encounter":
+
+                        while (true)
+                        {
+                            string i = Prompt();
+                            //run/leave
+                            if (i.ContainsAny("run", "get in", "lift", "leave", "exit"))
+                            {
+                                if (catSeen == false) { Print("You hurry away from the sound without looking back."); }
+                                else if (catSeen == true) { Print("You take another step towards the lift. The cat suddenly twitches violently then darts away.", "\n\n"); }
+                                previousLocation = location;
+                                location = "lift";
+                                break;
+                            }
+                            //look at shape
+                            else if (catSeen == false && i.ContainsAny("shape", "boxes", "box"))
+                            {
+                                Print("You see two glowing eyes flash before you. Then a black cat leaps out into your path.");
+                                catSeen = true;
+                            }
+                            //turn around
+                            else if (catSeen == false && i.ContainsAny("behind", "turn", "around")) { Print("You turn around to see a dark shape flicker between two boxes."); }
+                            //spike
+                            else if (catSeen == true && i.ContainsAny("spike", "Spike"))
+                            {
+                                Print("You call out to the cat by name. It seems to relax slightly then it darts away.");
+                                previousLocation = "encounter";
+                                location = "cargo";
+                                break;
+                            }
+                            //pet cat
+                            else if (catSeen == true && i.ContainsAny("pet", "stroke", "pick", "talk")) { Print("You bend down toward the cat. It arches its back and hisses at you again."); }
+                            //look cat
+                            else if (catSeen == true && i.Contains("look") && i.Contains("cat")) { Print("The cat stares directly at you. Its tail is raised and its claws are visible. Its fur is black with no markings. It has no collar."); }
+                            //collar
+                            else if (catSeen == true && i.ContainsAny("collar", "band") && bandGet == true) { Print("The cat won't allow you to get anywhere near it."); }
+                            //kopos kova
+                            else if (catSeen == true && i.ContainsAny("kopos kova", "Kopos Kova"))
+                            {
+                                Print("Stepping toward the cat you speak the name of your prisoner. Before your eyes the body of the cat transforms into the wiry frame of Kopos Kova.");
+                                Print("Without saying a word he meets your gaze.");
+                                Print("A numb sensation begins to spread throughout your body.");
+                                //if (batonGet == true)
+                                //{
+                                    int lastChance = 0;
                                     while (true)
                                     {
                                         i = Prompt();
-                                        //run
-                                        if (i.ContainsAny("run", "get in", "lift", "leave", "exit"))
+                                        if (batonGet == true && i.Contains("baton"))
                                         {
-                                            if (catSeen == false) { Print("You hurry away from the sound without looking back."); }
-                                            previousLocation = location;
-                                            location = "lift";
+                                            Print("With suprising ease you draw the baton from your belt and lunge forward. You press the tip to Kova's chest and squeeze the trigger. The baton flexes under the force and a jolt of electricty crackles along the blade into Kova's body. The fugitive drops unconcious to the floor.");
+                                            Print("The lift opens behind you. The person in the red uniform enters the room accompanied by two other crew members you have not seen before.");
+                                            Print("\"We saw what happened from the bridge. I had been keeping an eye on you with the ship's camera's. We will take this creature to the medical bay and make sure he is secured. Carry on with your investigation. Good work.\"");
+                                            Print("You watch as they haul the limp body of Kopos Kova into the lift. Warmth begins to return to your limbs and you are able to see the cargo bay clearly again.");
+                                            previousLocation = "encounter";
+                                            location = "cargo";
+                                            kovaDefeated = true;
                                             break;
                                         }
-                                        //look at shape
-                                        else if (i.ContainsAny("shape", "boxes", "box"))
+                                        else if (lastChance == 0)
                                         {
-                                            Print("You see two glowing eyes flash before you. Then a black cat leaps out into your path.");
-                                            catSeen = true;
+                                            Print("You do not have the strength to do that.");
+                                            lastChance++;
                                         }
-                                        //turn around
-                                        else if (i.ContainsAny("behind", "turn", "around")) { Print("You turn around to see a dark shape flicker between two boxes."); }
-                                        //spike
-                                        else if (i.Contains("spike"))
+                                        else if (lastChance == 1)
                                         {
-                                            Print("You call out to the cat by name. It seems to relax slightly then it darts away.");
+                                            Print("Your vision begins to fade.");
+                                            lastChance++;
+                                        }
+                                        else
+                                        {
+                                            Print("Everything turns black.");
+                                            location = "game over";
                                             break;
                                         }
-                                        //pet cat
-                                        else if (i.ContainsAny("pet", "stroke", "pick", "talk")) { Print("You bend down toward the cat. It arches its back and hisses at you again."); }
-                                        //look cat
-                                        else if (i.Contains("look") && i.Contains("cat")) { Print("The cat stares directly at you. Its tail is raised and its claws are visible. Its fur is black with no markings. It has no collar."); }
-                                        //collar
-                                        else if (i.ContainsAny("collar", "band") && bandGet == true) { Print("The cat won't allow you to get anywhere near it."); }
-                                        //kopos kova
-                                        else if (i.ContainsAny("kopos kova", "Kopos Kova"))
-                                        {
-                                            Print("Stepping toward the cat you speak the name of your prisoner. Before your eyes the body of the cat transforms into the wiry frame of Kopos Kova.");
-                                            Print("Without saying a word he meets your gaze.");
-                                            Print("A numb sensation begins to spread throughout your body.");
-                                            if (batonGet == true)
-                                            {
-                                                int lastChance = 0;
-                                                while (true)
-                                                {
-                                                    i = Prompt();
-                                                    if (i.Contains("baton"))
-                                                    {
-                                                        Print("With suprising ease you draw the baton from your belt and lunge forward. You press the tip to Kova's chest and squeeze the trigger. The baton flexes under the force and a jolt of electricty crackles along the blade into Kova's body. The fugitive drops unconcious to the floor.");
-                                                        Print("The lift opens behind you. The person in the red uniform enters the room accompanied by two other crew members you have not seen before.");
-                                                        Print("\"We saw what happened from the bridge. I had been keeping an eye on you with the ship's camera's. We will take this creature to the medical bay and make sure he is secured. Carry on with your investigation. Good work.\"");
-                                                        Print("You watch as they haul the limp body of Kopos Kova into the lift. Warmth begins to return to your limbs and you are able to see the cargo bay clearly again.");
-                                                        kovaDefeated = true;
-                                                        break;
-                                                    }
-                                                    else if (lastChance == 0)
-                                                    {
-                                                        Print("You do not have the strength to do that.");
-                                                        lastChance++;
-                                                    }
-                                                    else if (lastChance == 1)
-                                                    {
-                                                        Print("Your vision begins to fade.");
-                                                        lastChance++;
-                                                    }
-                                                    else
-                                                    {
-                                                        Print("Then everything turns black.");
-                                                        location = "game over";
-                                                        break;
-                                                    }
-                                                }
-                                            }
-                                            else
-                                            {
-                                                Print("Then everything turns black.");
-                                                location = "game over";
-                                                break;
-                                            }
-                                        }
-                                        if (location == "game over" || kovaDefeated == true) { break; }
                                     }
-
-                                }
+                               //}
+                                //else
+                                //{
+                                 //   Print("Then everything turns black.");
+                                  //  location = "game over";
+                                  //  break;
+                                //}
                             }
-                            if (location == "lift" || location == "game over") { break; }
+                            if (location == "game over" || kovaDefeated == true) { break; }
                         }
                         break;
 
@@ -922,7 +951,7 @@ namespace text_adventure
 
                         if (previousLocation == "103") { Print("You are in room 103."); }
                         else { Print("Room 103 appears to be the largest. There is a neatly kept bed, desk and bookshelf. There are no windows. On the desk is a computer terminal next to an open book."); }
-                        if (batonGet == false && previousLocation != "103") { Print("Above the shelf a baton is mounted to the wall."); }
+                        if (batonGet == false) { Print("Above the shelf a baton is mounted to the wall."); }
                         previousLocation = "103";
 
                         while (true)
@@ -959,6 +988,12 @@ namespace text_adventure
                                     batonSeen = true;
                                     batonGet = true;
                                 }
+                            }
+                            //look around
+                            else if (i.ContainsAny("look around", "look at room"))
+                            {
+                                { Print("Room 103 appears to be the largest. There is a neatly kept bed, desk and bookshelf. There are no windows. On the desk is a computer terminal next to an open book."); }
+                                if (batonGet == false) { Print("Above the shelf a baton is mounted to the wall."); }
                             }
                             //leave room
                             else if (i.ContainsAny("go back", "leave", "exit"))
@@ -1048,14 +1083,8 @@ namespace text_adventure
                             else if (i.ContainsAny("bed", "bunk")) { Print("There is nothing unusual about the bed."); }
                             //look at self
                             if (i.ContainsAny("self", "reflection", "mirror")) { Print("You are male. Short and stocky. Your face is criss-crossed with thin, straight scars. The bridge of your nose is distinctly off centre and your left ear seems not to match up to your right. The top of your head and jawline are close shaved. The onset of wrinkles is visible among the scars. You are dressed in the same blue jumpsuit."); }
-                            //identify self
-                            else if (i.ContainsAny("indentify", "self"))
-                            {
-                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                Print("> State your name and role: :");
-                                i = Prompt();
-                                if (i.ContainsAny("")) { Print("\"Crew member identity not recognised\""); }
-                            }
+                            //look around
+                            else if (i.ContainsAny("look around", "look at room")) { Print("Room 104a is sparse. The single bunk is unmade but otherwise the room is spotless. At the foot of the bed is a pair of boots. A calendar hangs on the wall beside a small mirror."); }
                             //leave room
                             else if (i.ContainsAny("go back", "leave", "exit"))
                             {
@@ -1086,15 +1115,9 @@ namespace text_adventure
                             //press button
                             else if (i.Contains("button")) { Print("A beam of light shines from the lens. You follow it to the wall opposite and see the words: WELCOME BACK ELANDRA."); }
                             //wool
-                            else if (i.Contains("wool")) { Print("There are three different coloured balls of wool. The strands are tangled and frayed."); }
-                            //identify self
-                            else if (i.ContainsAny("indentify", "self"))
-                            {
-                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                Print("> State your name and role: ");
-                                i = Prompt();
-                                if (i.ContainsAny("")) { Print("\"Crew member identity not recognised\""); }
-                            }
+                            else if (i.Contains("wool")) { Print("There are three balls of wool. The strands are tangled and frayed."); }
+                            //look around
+                            else if (i.ContainsAny("look around", "look at room")) { Print("Room 104b is tightly packed with boxes. There is very little habitable space except a bunk accessed by a ladder. On the bunk is a device with a round lens. On the floor are several partly unravelled balls of wool."); }
                             //leave room
                             else if (i.ContainsAny("go back", "leave", "exit"))
                             {
@@ -1112,21 +1135,14 @@ namespace text_adventure
                     case "201a":
 
                         if (previousLocation == "201a") { Print("You are in room 201a."); }
-                        else { Print("Room 201a has a messy bunk atop a ladder. Underneath is a desk and chair. Clamped to the desk is an empty vice. A metal armed lamp shines through a magnifying glass. Allen keys of various sizes are scattered across the tabletop."); }
+                        else { Print("Room 201a has a messy bunk atop a ladder. Underneath is a desk and chair. Clamped to the desk is an empty vice. A metal armed lamp shines through a magnifying glass. Hex keys of various sizes are scattered across the tabletop."); }
                         previousLocation = "201a";
 
                         while (true)
                         {
                             string i = Prompt();
-                            if (i.ContainsAny("indentify", "self"))
-                            {
-                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                Print("> State your name and role: ");
-                                i = Prompt();
-                                if (i.ContainsAny("")) { Print("\"Crew member identity not recognised\""); }
-                            }
                             //leave room
-                            else if (i.ContainsAny("go back", "leave", "exit"))
+                            if (i.ContainsAny("go back", "leave", "exit"))
                             {
                                 Print("You go back into the corridor.");
                                 Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -1136,9 +1152,12 @@ namespace text_adventure
                             }
                             //relay
                             else if (i.ContainsAny("relay", "communicator")) { goto case "relay"; }
+                            //vice
+                            else if (i.Contains("vice")) { Print("The vice is empty. It is the kind you might use in a workshop to hold objects still whilst tinkering with them."); }
                             //magnifying glass
                             else if (i.Contains("magnifying glass")) { Print("Enlarged through the magnifying glass you see a minute yellow crystal. It has a mosquito perfectly presevered inside."); }
-                            else { Print("There is nothing more of interest in the room."); }
+                            //look around
+                            else if (i.ContainsAny("look around", "look at room")) { Print("Room 201a has a messy bunk atop a ladder. Underneath is a desk and chair. Clamped to the desk is an empty vice. A metal armed lamp shines through a magnifying glass. Hex keys of various sizes are scattered across the tabletop."); }
                         }
 
                     /*room 201b*/
@@ -1154,21 +1173,15 @@ namespace text_adventure
                             //flowers
                             if (i.Contains("flowers"))
                             {
-                                Print("The flowers are bright pink but the petals appear to be fabric.");
+                                Print("The flowers are bright purple but the petals appear to be fabric. They smell faintly of lavender.");
                             }
                             //bed
                             else if (i.Contains("bed"))
                             {
                                 Print("The bed is firm with two stacked pillows. At the foot of the bed is a thick blanket.");
                             }
-                            //identify self
-                            else if (i.ContainsAny("indentify", "self"))
-                            {
-                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                Print("> State your name and role: ");
-                                i = Prompt();
-                                if (i.ContainsAny("")) { Print("\"Crew member identity not recognised\""); }
-                            }
+                            //look around
+                            else if (i.ContainsAny("look around", "look at room")) { Print("Room 201b is furnished with an arm chair and table. There is a low bed just barely raised off the ground. In the centre of the floor is a striped rug. On the table is a vase of flowers."); }
                             //leave room
                             else if (i.ContainsAny("go back", "leave", "exit"))
                             {
@@ -1295,6 +1308,19 @@ namespace text_adventure
                                 Computer("[+] Significant Medical History:", "\n");
                                 Computer("    Medical records not available", "\n\n");
                             }
+                            //Spike
+                            else if (m.ContainsAny("spike", "Spike"))
+                            {
+                                Computer("[+] Spike", "\n");
+                                Computer("[.] Identifies  : Male");
+                                Computer("[.] Age         : 4 Earth Years");
+                                Computer("[.] Height      : 24.02");
+                                Computer("[.] Weight      : 3.90");
+                                Computer("[.] Homeworld   : Earth", "\n");
+                                Computer("[+] Significant Medical History:", "\n");
+                                Computer("[.] Subatomic fleas");
+                                Computer("[.] Outcome: Regular treatment required.", "\n\n");
+                            }
                             //Exit
                             else if (m.ContainsAny("exit", "Exit"))
                             {
@@ -1319,11 +1345,13 @@ namespace text_adventure
                             string c = Prompt("    > Enter senior crew member information: NAME ROLE QUARTERS\n\n      ");
                             Console.ForegroundColor = ConsoleColor.DarkRed;
 
-                            if (c.ContainsAny("Ernest Rigg Captain 103", "ernest rigg captain 103", "ERNEST RIGG CAPTAIN 103"))
+                            if (riggEntered == false && c.ContainsAny("Ernest Rigg Captain 103", "ernest rigg captain 103", "ERNEST RIGG CAPTAIN 103"))
                             {
                                 answer++;
                                 Print(indent: 37, text: $"[ Senior crew member identification accepted ({answer}/5) ]");
                                 Print(indent: 40, text: "         [ Type \'exit\' to close ]", space: "\n\n\n");
+                                riggEntered = true;
+                                if (answer == 5) { break; }
                                 //Computer(indent: 30, text: "[ The captain must identify themselves in the captain's quarters ]", space: "\n\n\n"); //rigg entered
                             }
                             else if (beyettEntered == false && c.ContainsAny("Corvin Beyett First Mate 104a", "corvin beyett first mate 104a", "CORVIN BEYETT FIRST MATE 104A")) //beyett accepted
@@ -1603,11 +1631,12 @@ namespace text_adventure
                         Print("Red uniform approaches you again.");
                         Print("\"I apologise for my rash behaviour Captain. I acted on the only evidence that was available. It was in the interest of everyone here. I will relinquish my command of the ship.\"");
 
-                        if (kovaDefeated == true) { Print("Kova has been returned to medical. Fortunately his time in stasis left him too weak to phase off the ship before the shields came back online. It appears he was forced to improvise."); }
+                        if (kovaDefeated == true) { Print("\"Kova has been returned to medical. Fortunately his time in stasis left him too weak to phase off the ship before the shields came back online. It appears he was forced to improvise.\""); }
 
                         Print("The lift opens beside you. Amber Zathre walks onto the bridge and sits at a console. She is followed by Transport Officer Crest who stands looking out of the curved window.");
 
-                        if (kovaDefeated == false) { Print("Squirming angrily in her arms is the black cat."); }
+                        if (kovaDefeated == false && catSeen == true) { Print("Squirming angrily in her arms is the black cat."); }
+                        else if (kovaDefeated == false && catSeen == false) { Print("Squirming angrily in her arms is a black cat."); }
 
                         Print("The computer cuts in.");
                         Print("\"Warp drive coils are at full charge. Resuming previous heading. Standby to jump.\"");
