@@ -301,7 +301,7 @@ namespace text_adventure
                             {
                                 Print("All around you buttons and screens are flashing to life. You are in a small room filled from floor to ceiling with metal control panels. Chairs are tucked close to several narrow consoles. There is a single door labelled LIFT. A window separates the panels of one wall. You see thousands of stars against pure black. You are on the bridge of a starship.");
                                 Print("Five other people are getting to their feet alongside you. One is dressed in red, the others in blue jumpsuits with yellow trim. The jumpsuits are identical. The people in them could not look more different. They look around with blank expressions. Some begin to search the pockets and belt of their suits. You do not recognise anything or anyone.");
-                                Print("The repeated noise finally stops and you hear a new message take it place.");
+                                Print("The repeated noise finally stops and you hear a new message take its place.");
                                 bridgeSeen = true;
                                 break;
                             }
@@ -555,7 +555,6 @@ namespace text_adventure
                             //use relay
                             else if (i.ContainsAny("relay", "communicator"))
                             {
-                                previousLocation = "lift";
                                 location = "relay";
                                 break;
                             }
@@ -606,7 +605,7 @@ namespace text_adventure
                             Print("The lift creaks and moves downwards. Then it jolts to the side. Then goes down again.");
                             liftUsed = true;
                         }
-                        previousLocation = location;
+                        previousLocation = "lift";
                         break;
 
                     /*engineering*/
@@ -1682,6 +1681,7 @@ namespace text_adventure
                         Console.WriteLine("\n\n");
                         Centered("       >>> GAME OVER <<<", "\n");
                         Centered("   Restart game to try again.");
+                        Console.ReadKey();
                         gameRunning = false;
                         break;
                 }
