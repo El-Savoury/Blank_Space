@@ -1,2 +1,2 @@
 # blank_space
-Sci-fi text adventure
+Sci-Fi Text Adventure
