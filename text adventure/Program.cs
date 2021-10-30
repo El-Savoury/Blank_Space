@@ -68,7 +68,7 @@ namespace text_adventure
             return userInput;
         }
 
-        //put user input into array and iterate through to find instance of expected keyword
+        //put user input into array and iterates through to find instance of expected keyword
         static bool ContainsAny(this string userInput, params string[] keywords)
         {
             foreach (string keyword in keywords)
