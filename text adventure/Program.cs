@@ -305,6 +305,8 @@ namespace text_adventure
                                 bridgeSeen = true;
                                 break;
                             }
+                            //move
+                            else if(getUp == false && i.Contains("move")) {Print("You are laying on the floor.");}
                             //misc inputs
                             else if (i.ContainsAny("nothing", "wait")) { Print("You take a moment to try and collect your thoughts."); }
                             else if (i.ContainsAny("walk", "run", "go", "shout", "speak", "say")) { Print("You are currently too disorientated to do that."); }
@@ -1112,7 +1114,7 @@ namespace text_adventure
                             //device
                             else if (i.Contains("device")) { Print("The device is round and flat. It has a single button on the top and a lens pointing outward."); }
                             //press button
-                            else if (i.Contains("button")) { Print("A beam of light shines from the lens. You follow it to the wall opposite and see the words: WELCOME BACK ELANDRA."); }
+                            else if (i.Contains("button")) { Print("A ray of light shines from the lens. You follow it to the wall opposite and see the words: WELCOME BACK ELANDRA."); }
                             //wool
                             else if (i.Contains("wool")) { Print("There are three balls of wool. The strands are tangled and frayed."); }
                             //look around
