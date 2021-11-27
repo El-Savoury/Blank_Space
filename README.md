@@ -1,2 +1,2 @@
 # Blank Space
-Sci-Fi Text Adventure Console App
+Text Adventure Console App
