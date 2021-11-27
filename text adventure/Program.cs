@@ -230,7 +230,7 @@ namespace text_adventure
             {
                 switch (location)
                 {
-                    /*intro*/
+                    #region intro
                     case "intro":
 
                         //title screen
@@ -306,15 +306,16 @@ namespace text_adventure
                                 break;
                             }
                             //move
-                            else if(getUp == false && i.Contains("move")) {Print("You are laying on the floor.");}
+                            else if (getUp == false && i.Contains("move")) { Print("You are laying on the floor."); }
                             //misc inputs
                             else if (i.ContainsAny("nothing", "wait")) { Print("You take a moment to try and collect your thoughts."); }
                             else if (i.ContainsAny("walk", "run", "go", "shout", "speak", "say")) { Print("You are currently too disorientated to do that."); }
                         }
                         location = "bridge";
                         break;
+                    #endregion
 
-                    /* bridge*/
+                    #region bridge
                     case "bridge":
 
                         //return to bridge message.
@@ -531,8 +532,9 @@ namespace text_adventure
                             location = "lift";
                             break;
                         }
+                    #endregion
 
-                    /*lift*/
+                    #region lift
                     case "lift":
 
                         if (liftEntered == false) //enter lift for first time
@@ -609,8 +611,9 @@ namespace text_adventure
                         }
                         previousLocation = "lift";
                         break;
+                    #endregion
 
-                    /*engineering*/
+                    #region engineering
                     case "engineering":
 
                         if (engineVisited == false)
@@ -660,8 +663,9 @@ namespace text_adventure
                             location = "lift";
                             break;
                         }
+                    #endregion
 
-                    /*med bay*/
+                    #region med bay
                     case "medical":
 
                         if (medicalVisited == false)
@@ -750,8 +754,9 @@ namespace text_adventure
                             location = "lift";
                             break;
                         }
+                    #endregion
 
-                    /*cargo*/
+                    #region cargo
                     case "cargo":
 
                         cargoVisits++;
@@ -813,9 +818,9 @@ namespace text_adventure
                             }
                         }
                         break;
+                    #endregion
 
-
-                    /*encounter*/
+                    #region encounter
                     case "encounter":
 
                         while (true)
@@ -860,51 +865,52 @@ namespace text_adventure
                                 Print("A numb sensation begins to spread throughout your body.");
                                 //if (batonGet == true)
                                 //{
-                                    int lastChance = 0;
-                                    while (true)
+                                int lastChance = 0;
+                                while (true)
+                                {
+                                    i = Prompt();
+                                    if (batonGet == true && i.Contains("baton"))
                                     {
-                                        i = Prompt();
-                                        if (batonGet == true && i.Contains("baton"))
-                                        {
-                                            Print("With suprising ease you draw the baton from your belt and lunge forward. You press the tip to Kova's chest and squeeze the trigger. The baton flexes under the force and a jolt of electricty crackles along the blade into Kova's body. The fugitive drops unconcious to the floor.");
-                                            Print("The lift opens behind you. The person in the red uniform enters the room accompanied by two other crew members you have not seen before.");
-                                            Print("\"We saw what happened from the bridge. I had been keeping an eye on you with the ship's camera's. We will take this creature to the medical bay and make sure he is secured. Carry on with your investigation. Good work.\"");
-                                            Print("You watch as they haul the limp body of Kopos Kova into the lift. Warmth begins to return to your limbs and you are able to see the cargo bay clearly again.");
-                                            previousLocation = "encounter";
-                                            location = "cargo";
-                                            kovaDefeated = true;
-                                            break;
-                                        }
-                                        else if (lastChance == 0)
-                                        {
-                                            Print("You do not have the strength to do that.");
-                                            lastChance++;
-                                        }
-                                        else if (lastChance == 1)
-                                        {
-                                            Print("Your vision begins to fade.");
-                                            lastChance++;
-                                        }
-                                        else
-                                        {
-                                            Print("Everything turns black.");
-                                            location = "game over";
-                                            break;
-                                        }
+                                        Print("With suprising ease you draw the baton from your belt and lunge forward. You press the tip to Kova's chest and squeeze the trigger. The baton flexes under the force and a jolt of electricty crackles along the blade into Kova's body. The fugitive drops unconcious to the floor.");
+                                        Print("The lift opens behind you. The person in the red uniform enters the room accompanied by two other crew members you have not seen before.");
+                                        Print("\"We saw what happened from the bridge. I had been keeping an eye on you with the ship's camera's. We will take this creature to the medical bay and make sure he is secured. Carry on with your investigation. Good work.\"");
+                                        Print("You watch as they haul the limp body of Kopos Kova into the lift. Warmth begins to return to your limbs and you are able to see the cargo bay clearly again.");
+                                        previousLocation = "encounter";
+                                        location = "cargo";
+                                        kovaDefeated = true;
+                                        break;
                                     }
-                               //}
+                                    else if (lastChance == 0)
+                                    {
+                                        Print("You do not have the strength to do that.");
+                                        lastChance++;
+                                    }
+                                    else if (lastChance == 1)
+                                    {
+                                        Print("Your vision begins to fade.");
+                                        lastChance++;
+                                    }
+                                    else
+                                    {
+                                        Print("Everything turns black.");
+                                        location = "game over";
+                                        break;
+                                    }
+                                }
+                                //}
                                 //else
                                 //{
-                                 //   Print("Then everything turns black.");
-                                  //  location = "game over";
-                                  //  break;
+                                //   Print("Then everything turns black.");
+                                //  location = "game over";
+                                //  break;
                                 //}
                             }
                             if (location == "game over" || kovaDefeated == true) { break; }
                         }
                         break;
+                    #endregion
 
-                    /*quarters*/
+                    #region quarters
                     case "quarters":
 
                         location = "quarters";
@@ -946,8 +952,9 @@ namespace text_adventure
                             }
                         }
                         break;
+                    #endregion
 
-                    /*room 103*/
+                    #region room 103
                     case "103":
 
                         if (previousLocation == "103") { Print("You are in room 103."); }
@@ -1063,8 +1070,9 @@ namespace text_adventure
                                 }
                             }
                         }
+                    #endregion
 
-                    /*room 104a*/
+                    #region room 104a
                     case "104a":
 
                         if (previousLocation == "104a") { Print("You are in room 104a."); }
@@ -1098,8 +1106,9 @@ namespace text_adventure
                             //relay
                             else if (i.ContainsAny("relay", "communicator")) { goto case "relay"; }
                         }
+                    #endregion
 
-                    /*room 104b*/
+                    #region room 104b
                     case "104b":
 
                         if (previousLocation == "104b") { Print("You are in room 104b."); }
@@ -1131,8 +1140,9 @@ namespace text_adventure
                             //relay
                             else if (i.ContainsAny("relay", "communicator")) { goto case "relay"; }
                         }
+                    #endregion
 
-                    /*room 201a*/
+                    #region room 201a
                     case "201a":
 
                         if (previousLocation == "201a") { Print("You are in room 201a."); }
@@ -1160,8 +1170,9 @@ namespace text_adventure
                             //look around
                             else if (i.ContainsAny("look around", "look at room")) { Print("Room 201a has a messy bunk atop a ladder. Underneath is a desk and chair. Clamped to the desk is an empty vice. A metal armed lamp shines through a magnifying glass. Hex keys of various sizes are scattered across the tabletop."); }
                         }
+                    #endregion
 
-                    /*room 201b*/
+                    #region room 201b
                     case "201b":
 
                         if (previousLocation == "201b") { Print("You are in room 201b."); }
@@ -1195,8 +1206,9 @@ namespace text_adventure
                             //relay
                             else if (i.ContainsAny("relay", "communicator")) { goto case "relay"; }
                         }
+                    #endregion
 
-                    /*medical records*/
+                    #region medical records
                     case "med records":
                         while (true)
                         {
@@ -1333,8 +1345,9 @@ namespace text_adventure
                         }
                         location = "medical";
                         break;
+                    #endregion
 
-                    /*relay*/
+                    #region relay
                     case "relay":
                         Console.ForegroundColor = ConsoleColor.DarkRed;
 
@@ -1346,7 +1359,7 @@ namespace text_adventure
                             string c = Prompt("    > Enter senior crew member information: NAME ROLE QUARTERS\n\n      ");
                             Console.ForegroundColor = ConsoleColor.DarkRed;
 
-                            if (riggEntered == false && c.ContainsAny("Ernest Rigg Captain 103", "ernest rigg captain 103", "ERNEST RIGG CAPTAIN 103"))
+                            if (riggEntered == false && c.ToUpper() == "ERNEST RIGG CAPTAIN 103")
                             {
                                 answer++;
                                 Print(indent: 37, text: $"[ Senior crew member identification accepted ({answer}/5) ]");
@@ -1355,7 +1368,7 @@ namespace text_adventure
                                 if (answer == 5) { break; }
                                 //Computer(indent: 30, text: "[ The captain must identify themselves in the captain's quarters ]", space: "\n\n\n"); //rigg entered
                             }
-                            else if (beyettEntered == false && c.ContainsAny("Corvin Beyett First Mate 104a", "corvin beyett first mate 104a", "CORVIN BEYETT FIRST MATE 104A")) //beyett accepted
+                            else if (beyettEntered == false && c.ToUpper() == "CORVIN BEYETT FIRST MATE 104A") //beyett accepted
                             {
                                 answer++;
                                 if (answer == 1) { FirstCorrect(); }
@@ -1364,7 +1377,7 @@ namespace text_adventure
                                 beyettEntered = true;
                                 if (answer == 5) { break; }
                             }
-                            else if (marceauEntered == false && c.ContainsAny("Elodie Marceau Doctor 201b", "elodie marceau doctor 201b", "ELODIE MARCEAU DOCTOR 201B")) //marceau accepted
+                            else if (marceauEntered == false && c.ToUpper() == "ELODIE MARCEAU DOCTOR 201B") //marceau accepted
                             {
                                 answer++;
                                 if (answer == 1) { FirstCorrect(); }
@@ -1373,7 +1386,7 @@ namespace text_adventure
                                 marceauEntered = true;
                                 if (answer == 5) { break; }
                             }
-                            else if (zathreEntered == false && c.ContainsAny("Amber Zathre Chief Engineer 201a", "amber zathre chief engineer 201a", "AMBER ZATHRE CHIEF ENGINEER 201A")) //zathre accepted
+                            else if (zathreEntered == false && c.ToUpper() == "AMBER ZATHRE CHIEF ENGINEER 201A") //zathre accepted
                             {
                                 answer++;
                                 if (answer == 1) { FirstCorrect(); }
@@ -1382,7 +1395,7 @@ namespace text_adventure
                                 zathreEntered = true;
                                 if (answer == 5) { break; }
                             }
-                            else if (crestEntered == false && c.ContainsAny("Elandra Crest Transport Officer 104b", "elandra crest transport officer 104b", "ELANDRA CREST TRANSPORT OFFICER 104B")) //crest accepted 
+                            else if (crestEntered == false && c.ToUpper() == "ELANDRA CREST TRANSPORT OFFICER 104B") //crest accepted 
                             {
                                 answer++;
                                 if (answer == 1) { FirstCorrect(); }
@@ -1392,7 +1405,7 @@ namespace text_adventure
                                 if (answer == 5) { break; }
 
                             }
-                            else if (c.ContainsAny("Exit", "exit")) //exit
+                            else if (c.ToUpper() == "Exit") //exit relay
                             {
                                 Console.ResetColor();
                                 Print("You put the relay device back into your pocket.");
@@ -1414,8 +1427,9 @@ namespace text_adventure
                             location = previousLocation; //go to previous location
                             break;
                         }
+                    #endregion
 
-                    /*computer*/
+                    #region computer
                     case "computer":
                         Console.ForegroundColor = ConsoleColor.DarkYellow; //change text colour to yellow
                         string page = "default";
@@ -1615,8 +1629,9 @@ namespace text_adventure
                         Console.ResetColor();
                         location = "engineering";
                         break;
+                    #endregion
 
-                    /*epilogue*/
+                    #region epilogue
                     case "win":
 
                         Console.ResetColor();
@@ -1676,8 +1691,9 @@ namespace text_adventure
                         Console.ReadKey();
                         gameRunning = false;
                         break;
+                    #endregion
 
-                    /*game over*/
+                    #region game over
                     case "game over":
                         Console.ForegroundColor = ConsoleColor.DarkGray;
                         Console.WriteLine("\n\n");
@@ -1686,12 +1702,11 @@ namespace text_adventure
                         Console.ReadKey();
                         gameRunning = false;
                         break;
+                        #endregion
                 }
             }
         }
-
     }
-
 }
 
 
